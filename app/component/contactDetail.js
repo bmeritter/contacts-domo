@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 40,
+        marginBottom: 20,
     },
     contactText: {
         padding: 10,
