@@ -16,7 +16,6 @@ export default class ContactList extends React.Component {
         });
         this.props.navigator.push({
             component: ContactDetail,
-            title: 'contacts',
             passProps: {index}
         });
     }
@@ -49,7 +48,12 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     image: {
-        width: 50, height: 50,
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        paddingBottom: 25,
+        borderColor: 'grey',
+        borderWidth: 1,
     },
     username: {
         padding: 5,

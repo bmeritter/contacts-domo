@@ -9,7 +9,7 @@ export default class App extends React.Component {
                 style={{flex: 1}}
                 initialRoute={{
                     component: ContactList,
-                    title: 'Contacts',
+                    title: 'contacts',
                     passProps: {},
                 }}
             />
