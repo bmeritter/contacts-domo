@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import contacts from '../data/fixture';
 
 export default class ContactDetail extends Component {
     constructor(props) {

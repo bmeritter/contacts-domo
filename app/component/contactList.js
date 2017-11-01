@@ -38,12 +38,10 @@ export default class ContactList extends Component {
     };
 
     onEndReached = () => {
-        console.log('reached');
         this.state.contacts = this.state.contacts.concat(contacts);
     };
 
     render() {
-        console.log('render');
         return (
             <ListView
                 dataSource={this.state.dataSource.cloneWithRows(this.state.contacts)}
