@@ -1,40 +1,45 @@
-import React from 'react';
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import ContactDetail from "./contactDetail";
+import React, {Component} from 'react';
+import {Image, ListView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import ContactDetail from './contactDetail';
 
 import contacts from '../data/fixture';
 
-export default class ContactList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.goTo = this.goTo.bind(this);
+export default class ContactList extends Component {
+    constructor() {
+        super();
+        this.state = {
+            dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
+            contacts: contacts,
+        };
     }
 
-    goTo(index) {
-        this.setState({currentIndex: index}, () => {
+    goTo = (index) => {
+        return () => {
+            this.setState({ currentIndex: index });
+            this.props.navigator.push({
+                component: ContactDetail,
+                passProps: { index }
+            });
+        }
 
-        });
-        this.props.navigator.push({
-            component: ContactDetail,
-            passProps: {index}
-        });
-    }
+    };
+
+    renderRow = ({name}, sectionId, rowId)=>{
+        return (
+            <TouchableOpacity style={styles.contact} key={rowId} onPress={this.goTo(rowId)}>
+                <Image style={styles.image}
+                       source={require('../image/001.jpg')}/>
+                <Text style={styles.username}>{name}</Text>
+            </TouchableOpacity>
+        );
+    };
 
     render() {
         return (
-            <ScrollView>
-                {
-                    contacts.map((contact, index) => {
-                        return (
-                            <TouchableOpacity style={styles.contact} key={index} onPress={this.goTo.bind(this, index)}>
-                                <Image style={styles.image}
-                                       source={require('../image/001.jpg')}/>
-                                <Text style={styles.username}>{contact.name}</Text>
-                            </TouchableOpacity>
-                        );
-                    })
-                }
-            </ScrollView>
+            <ListView
+                dataSource={this.state.dataSource.cloneWithRows(this.state.contacts)}
+                renderRow={this.renderRow}
+            />
         );
     }
 }
