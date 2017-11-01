@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Image, ListView, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import ContactDetail from './contactDetail';
+import {Dimensions, Image, ListView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
+import ContactDetail from './contactDetail';
 import contacts from '../data/fixture';
 
 export default class ContactList extends Component {
@@ -18,13 +18,16 @@ export default class ContactList extends Component {
             this.setState({ currentIndex: index });
             this.props.navigator.push({
                 component: ContactDetail,
-                passProps: { index }
+                passProps: {
+                    index,
+                    contacts: this.state.contacts
+                }
             });
         }
 
     };
 
-    renderRow = ({name}, sectionId, rowId)=>{
+    renderRow = ({ name }, sectionId, rowId) => {
         return (
             <TouchableOpacity style={styles.contact} key={rowId} onPress={this.goTo(rowId)}>
                 <Image style={styles.image}
@@ -34,11 +37,19 @@ export default class ContactList extends Component {
         );
     };
 
+    onEndReached = () => {
+        console.log('reached');
+        this.state.contacts = this.state.contacts.concat(contacts);
+    };
+
     render() {
+        console.log('render');
         return (
             <ListView
                 dataSource={this.state.dataSource.cloneWithRows(this.state.contacts)}
                 renderRow={this.renderRow}
+                onEndReachedThreshold={Dimensions.get('window').height}
+                onEndReached={this.onEndReached}
             />
         );
     }

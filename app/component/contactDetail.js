@@ -8,7 +8,8 @@ export default class ContactDetail extends Component {
     }
 
     render() {
-        const contact = contacts[this.props.index];
+        const {contacts, index} = this.props;
+        const contact = contacts[index];
         return (
             <ScrollView>
                 <View style={styles.containers}>
