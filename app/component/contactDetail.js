@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {connect} from 'react-redux';
 
-export default class ContactDetail extends Component {
+class ContactDetail extends Component {
     constructor(props) {
         super(props);
     }
 
     render() {
-        const {contacts, index} = this.props;
+        const { contacts, index } = this.props;
         const contact = contacts[index];
         return (
             <ScrollView>
@@ -51,3 +52,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
 });
+
+const mapStateToProps = state => ({ contacts: state.contacts });
+
+export default connect(mapStateToProps)(ContactDetail);

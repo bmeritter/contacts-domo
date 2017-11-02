@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {Dimensions, Image, ListView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Image, ListView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 import ContactDetail from './contactDetail';
 import contacts from '../data/fixture';
+import {loadContacts} from '../action/contact';
+import {connect} from 'react-redux';
 
-export default class ContactList extends Component {
+class ContactList extends Component {
     constructor() {
         super();
         this.state = {
@@ -20,7 +22,6 @@ export default class ContactList extends Component {
                 component: ContactDetail,
                 passProps: {
                     index,
-                    contacts: this.state.contacts
                 }
             });
         }
@@ -38,17 +39,15 @@ export default class ContactList extends Component {
     };
 
     onEndReached = () => {
-        this.setState({
-            contacts: [...this.state.contacts, ...contacts]
-        });
+        this.props.loadContacts();
     };
 
     render() {
         return (
             <ListView
-                dataSource={this.state.dataSource.cloneWithRows(this.state.contacts)}
+                dataSource={this.state.dataSource.cloneWithRows(this.props.contacts)}
                 renderRow={this.renderRow}
-                onEndReachedThreshold={Dimensions.get('window').height}
+                onEndReachedThreshold={0.5}
                 onEndReached={this.onEndReached}
             />
         );
@@ -75,3 +74,15 @@ const styles = StyleSheet.create({
         padding: 5,
     }
 });
+
+const mapStateToProps = state => ({ contacts: state.contacts });
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadContacts: () => {
+            dispatch(loadContacts());
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
