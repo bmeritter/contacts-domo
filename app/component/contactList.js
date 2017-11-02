@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Image, ListView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 import ContactDetail from './contactDetail';
-import contacts from '../data/fixture';
 import {loadContacts} from '../action/contact';
 import {connect} from 'react-redux';
 
@@ -11,8 +10,12 @@ class ContactList extends Component {
         super();
         this.state = {
             dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
-            contacts: contacts,
+            contacts: [],
         };
+    }
+
+    componentDidMount() {
+        this.props.loadContacts();
     }
 
     goTo = (index) => {
