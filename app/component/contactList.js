@@ -38,7 +38,9 @@ export default class ContactList extends Component {
     };
 
     onEndReached = () => {
-        this.state.contacts = this.state.contacts.concat(contacts);
+        this.setState({
+            contacts: [...this.state.contacts, ...contacts]
+        });
     };
 
     render() {
