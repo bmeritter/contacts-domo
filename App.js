@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { NavigatorIOS } from 'react-native';
 import ContactList from './app/component/contactList';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { rootReducer } from './app/reducer/index';
+import thunkMiddleware from 'redux-thunk';
 
 const store = createStore(
     rootReducer,
+    applyMiddleware(thunkMiddleware)
 );
 
 export default class App extends Component {

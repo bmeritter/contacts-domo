@@ -1,11 +1,16 @@
-import contacts from '../data/fixture';
+// http://www.mocky.io/v2/5a01c6a83300005002f6ed66
+export const loadContacts = (state = {}, action) => {
+        switch (action.type) {
+            case 'LOAD_CONTACTS':
+                return { ...action };
+            case 'LOAD_CONTACTS_SUCCESS':
 
-export const loadContacts = (state = contacts, action) => {
-    switch (action.type) {
-        case 'LOAD_CONTACTS':
-            return [...state, ...contacts];
-        default:
-            return state;
+                return { data: [...state.data || [], ...action.data], isLoading: action.isLoading };
+            case 'LOAD_CONTACTS_FAILURE':
+                return { isLoading: action.isLoading };
+            default:
+                return state;
+        }
+
     }
-
-};
+;

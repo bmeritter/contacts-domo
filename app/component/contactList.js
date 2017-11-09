@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Image, ListView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { ActivityIndicator, Image, ListView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import ContactDetail from './contactDetail';
-import {loadContacts} from '../action/contact';
-import {connect} from 'react-redux';
+import { loadContacts } from '../action/contact';
+import { connect } from 'react-redux';
 
 class ContactList extends Component {
     constructor() {
@@ -25,6 +25,7 @@ class ContactList extends Component {
                 component: ContactDetail,
                 passProps: {
                     index,
+                    contacts: this.props.contacts.data || []
                 }
             });
         }
@@ -45,15 +46,33 @@ class ContactList extends Component {
         this.props.loadContacts();
     };
 
-    render() {
+    renderMask = () => {
+        return (
+            <TouchableOpacity style={{ marginTop: 230 }}>
+                <ActivityIndicator
+                    style={[styles.centering, { flex: 1 }]}
+                    size='small'
+                />
+            </TouchableOpacity>
+        );
+    };
+
+    renderContent = () => {
         return (
             <ListView
-                dataSource={this.state.dataSource.cloneWithRows(this.props.contacts)}
+                dataSource={this.state.dataSource.cloneWithRows(this.props.contacts.data || [])}
                 renderRow={this.renderRow}
                 onEndReachedThreshold={0.5}
                 onEndReached={this.onEndReached}
             />
         );
+    };
+
+    render() {
+        const isLoading = this.props.contacts.isLoading;
+        return (
+            isLoading ? this.renderMask() : this.renderContent()
+        )
     }
 }
 
@@ -75,7 +94,12 @@ const styles = StyleSheet.create({
     },
     username: {
         padding: 5,
-    }
+    },
+    centering: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 8,
+    },
 });
 
 const mapStateToProps = state => ({ contacts: state.contacts });
