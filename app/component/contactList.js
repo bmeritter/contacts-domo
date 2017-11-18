@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Image, ListView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Image, ListView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import ContactDetail from './contactDetail';
 import { loadContacts } from '../action/contact';
@@ -71,7 +71,10 @@ class ContactList extends Component {
     render() {
         const isLoading = this.props.contacts.isLoading;
         return (
-            isLoading ? this.renderMask() : this.renderContent()
+            <View>
+                {this.renderContent()}
+                {isLoading ? this.renderMask() : null}
+            </View>
         )
     }
 }
