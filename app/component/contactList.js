@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Image, ListView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-import ContactDetail from './contactDetail';
 import { loadContacts } from '../action/contact';
 import { connect } from 'react-redux';
+import { Actions } from "react-native-router-flux";
 
 class ContactList extends Component {
     constructor() {
         super();
         this.state = {
-            dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
+            dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
             contacts: [],
         };
     }
@@ -18,26 +17,13 @@ class ContactList extends Component {
         this.props.loadContacts();
     }
 
-    goTo = (index) => {
-        return () => {
-            this.setState({ currentIndex: index });
-            this.props.navigator.push({
-                component: ContactDetail,
-                passProps: {
-                    index,
-                    contacts: this.props.contacts.data || []
-                }
-            });
-        }
 
-    };
-
-    renderRow = ({ name }, sectionId, rowId) => {
+    renderRow = (contact, sectionId, rowId) => {
         return (
-            <TouchableOpacity style={styles.contact} key={rowId} onPress={this.goTo(rowId)}>
+            <TouchableOpacity style={styles.contact} key={rowId} onPress={() => Actions.contactDetail({contact})}>
                 <Image style={styles.image}
                        source={require('../image/001.jpg')}/>
-                <Text style={styles.username}>{name}</Text>
+                <Text style={styles.username}>{contact.name}</Text>
             </TouchableOpacity>
         );
     };
@@ -48,9 +34,9 @@ class ContactList extends Component {
 
     renderMask = () => {
         return (
-            <TouchableOpacity style={{ marginTop: 230 }}>
+            <TouchableOpacity style={{marginTop: 230}}>
                 <ActivityIndicator
-                    style={[styles.centering, { flex: 1 }]}
+                    style={[styles.centering, {flex: 1}]}
                     size='small'
                 />
             </TouchableOpacity>
@@ -105,7 +91,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const mapStateToProps = state => ({ contacts: state.contacts });
+const mapStateToProps = state => ({contacts: state.contacts});
 
 const mapDispatchToProps = (dispatch) => {
     return {

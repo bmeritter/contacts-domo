@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+
 
 class ContactDetail extends Component {
     constructor(props) {
@@ -8,8 +9,7 @@ class ContactDetail extends Component {
     }
 
     render() {
-        const { contacts, index } = this.props;
-        const contact = contacts[index];
+        const {contact} = this.props;
         return (
             <ScrollView>
                 <View style={styles.containers}>
@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
     },
 });
 
-const mapStateToProps = state => ({ contacts: state.contacts });
+const mapStateToProps = state => ({contacts: state.contacts});
 
 export default connect(mapStateToProps)(ContactDetail);
