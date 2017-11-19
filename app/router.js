@@ -1,26 +1,23 @@
-import React, { Component } from "react";
-import { Router, Scene, Actions } from "react-native-router-flux";
+import React from 'react';
+import { Router, Scene } from 'react-native-router-flux';
 
-import ContactList from "./component/contactList"
-import ContactDetail from "./component/contactDetail"
+import ContactList from './component/contactList'
+import ContactDetail from './component/contactDetail'
 
 const AppRouter = () => {
     return (
         <Router>
-            <Scene key="root">
+            <Scene key='root'>
                 <Scene
-                    key="contactList"
+                    key='contactList'
                     component={ContactList}
-                    title="Contact List"
+                    title='Contact List'
                 />
                 <Scene
-                    key="contactDetail"
+                    key='contactDetail'
                     component={ContactDetail}
-                    title="Contact Detail"
-                    backTitle="返回"
-                    onBack={() => {
-                        Actions.pop();
-                    }}
+                    title='Contact Detail'
+                    backTitle='返回'
                 />
             </Scene>
         </Router>
