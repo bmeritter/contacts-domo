@@ -4,12 +4,14 @@ export const loadContacts = () => {
         fetch('http://www.mocky.io/v2/5a01c6a83300005002f6ed66')
             .then(response => response.json())
             .then(data => {
-                if (data.length !== 0) {
+                if (data.length !== 0){
                     return dispatch(loadContactsSuccess(data));
                 } else {
                     dispatch(loadContactsFailure());
                 }
-            }).done();
+            }).catch(
+            dispatch(loadContactsFailure())
+        );
     }
 };
 
