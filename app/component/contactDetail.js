@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-
+import Communications from 'react-native-communications';
 
 class ContactDetail extends Component {
     constructor(props) {
@@ -18,7 +18,9 @@ class ContactDetail extends Component {
 
                     <Text style={styles.name}>{contact.name}</Text>
                 </View>
-                <Text style={styles.contactText}>电话：{contact.phoneNumber}</Text>
+                <TouchableOpacity onPress={() => Communications.phonecall(contact.phoneNumber, true)}>
+                    <Text style={styles.contactText}>电话：{contact.phoneNumber}</Text>
+                </TouchableOpacity>
                 <Text style={styles.contactText}>生日：{contact.birthday}</Text>
                 <Text style={styles.contactText}>地址：{contact.address}</Text>
                 <Text style={styles.contactText}>公司名称：{contact.company}</Text>

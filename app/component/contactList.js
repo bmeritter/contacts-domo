@@ -50,6 +50,7 @@ class ContactList extends Component {
                 renderRow={this.renderRow}
                 onEndReachedThreshold={0.5}
                 onEndReached={this.onEndReached}
+                enableEmptySections
             />
         );
     };
